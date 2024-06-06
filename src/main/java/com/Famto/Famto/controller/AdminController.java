@@ -20,6 +20,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("api/v1")
 @PreAuthorize("hasRole('ADMIN')")
@@ -69,6 +71,12 @@ public class AdminController {
         } else {
             throw new UsernameNotFoundException("Invalid user request!");
         }
+    }
+
+
+    @GetMapping("/getAllUser")
+    public ResponseEntity<List<User>> getAllUser(){
+        return ResponseEntity.ok().body(merchantService.userList());
     }
 
 

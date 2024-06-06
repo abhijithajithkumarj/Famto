@@ -1,6 +1,7 @@
 package com.Famto.Famto.config;
 
 
+import com.Famto.Famto.entity.Admin;
 import com.Famto.Famto.entity.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -23,6 +24,11 @@ public class JwtService {
     }
 
     public boolean isValid(String token, User user){
+        String username=extractUsername(token);
+        return username.equals(user.getUsername()) && !isTokenExpired(token);
+    }
+
+    public boolean isValidAdmin(String token, Admin user){
         String username=extractUsername(token);
         return username.equals(user.getUsername()) && !isTokenExpired(token);
     }
