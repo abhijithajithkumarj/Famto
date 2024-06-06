@@ -1,6 +1,7 @@
 package com.Famto.Famto.config;
 
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -23,6 +24,10 @@ public class SecurityConfig {
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
 
+    @Autowired
+    private  AdminDetailsService adminDetailsService;
+
+
     public SecurityConfig(UserDetailsImp userDetailsImp, JwtAuthenticationFilter jwtAuthenticationFilter) {
         this.userDetailsImp = userDetailsImp;
         this.jwtAuthenticationFilter = jwtAuthenticationFilter;
@@ -39,6 +44,7 @@ public class SecurityConfig {
                                 .anyRequest()
                                 .authenticated()
                 ).userDetailsService(userDetailsImp)
+                 .userDetailsService(adminDetailsService)
                 .sessionManagement(
                         session->session
                                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS))

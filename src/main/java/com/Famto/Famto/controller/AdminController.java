@@ -53,11 +53,6 @@ public class AdminController {
     }
 
 
-
-
-
-
-
     @PostMapping("/login")
     public String authAndToken(@RequestBody AuthenticationResponse authenticationResponse) {
         Authentication authentication = authenticationManager.authenticate(

@@ -39,24 +39,24 @@ public class MerchantServiceImp implements MerchantService {
 
     @Override
     public UserDto saveMerchant(UserDto user) {
-        Optional<Admin> adminId = adminRepository.findById(UUID.fromString(user.getAdminId()));
+        Optional<User> adminId = userRepository.findById(UUID.fromString(user.getAdminId()));
 
-        System.out.println(adminId);
+        if (adminId.isPresent() && adminId.get().getRole()==Role.ADMIN) {
+            String encryptedPassword = passwordEncoder.encode(user.getPassword());
+            User merchant = User
+                    .builder()
+                    .username(user.getUsername())
+                    .email(user.getEmail())
+                    .phoneNumber(user.getPhoneNumber())
+                    .role(Role.MERCHANTS)
+                    .ownerName(user.getOwnerName())
+                    .shopName(user.getShopName())
+                    .password(encryptedPassword)
+                    .build();
 
-        if (adminId.isPresent()) {
-            Admin existingUser = adminId.get();
-            if (existingUser.getRole() == Role.ADMIN) {
-
-                User userData = modelMapper.map(user, User.class);
-                String encryptedPassword = passwordEncoder.encode(user.getPassword());
-                userData.setPassword(encryptedPassword);
-                userData.setRole(Role.MERCHANTS);
-                userData.setAdmin(adminId.get());
-                User savedUser = userRepository.save(userData);
+                User savedUser = userRepository.save(merchant);
                 return modelMapper.map(savedUser, UserDto.class);
-            } else {
-                throw new IllegalArgumentException("User with ID " + user.getAdminId() + " is not an ADMIN");
-            }
+
         } else {
             throw new UsernameNotFoundException("User with ID " + user.getAdminId() + " not found");
         }

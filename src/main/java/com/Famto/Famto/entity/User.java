@@ -33,12 +33,11 @@ public class User implements UserDetails {
     private String email;
     private String shopName;
     private String phoneNumber;
-    private String category;
     private String ownerName;
 
 
-    @ManyToOne
-    private Admin admin;
+
+
 
 
 

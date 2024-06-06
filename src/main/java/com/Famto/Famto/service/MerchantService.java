@@ -5,6 +5,6 @@ import com.Famto.Famto.entity.User;
 
 public interface MerchantService {
 
-
     UserDto saveMerchant(UserDto user);
+
 }
