@@ -1,0 +1,17 @@
+
+
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/famto_db?useSSL=false&serverTimezone=UTC
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.MySQLDialect
+    hibernate:
+      ddl-auto: update # change to 'create' if you want Hibernate to create tables, 'update' to update existing tables
+    show-sql: true # set to true to enable SQL logging
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+        format_sql: true
