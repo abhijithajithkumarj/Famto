@@ -53,11 +53,11 @@ public class JwtService {
                 .getPayload();
     }
 
-    public String generateToken(User user){
+    public String generateToken(String user){
 
         return Jwts
                 .builder()
-                .subject(user.getUsername())
+                .subject(user)
                 .issuedAt(new Date(System.currentTimeMillis()))
                 .expiration(new Date(System.currentTimeMillis()+24*60*60*1000))
                 .signWith(getSigninKey())
