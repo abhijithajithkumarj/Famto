@@ -65,15 +65,27 @@ public class MerchantServiceImp implements MerchantService {
     }
 
     @Override
-    public List<User> userList() {
+    public List<User> userList(String adminId) {
         try {
-            return userRepository.findAll()
-                    .stream()
-                    .filter(delete -> !delete.isActive())
-                    .collect(Collectors.toList());
+            if (adminId != null && !adminId.isEmpty()) {
+                Optional<Admin> adminOptional = adminRepository.findById(UUID.fromString(adminId));
+                if (adminOptional.isPresent()) {
+
+                    return userRepository.findAll();
+                } else {
+                    throw new AdminNotFoundException("Admin with ID " + adminId + " not found");
+                }
+            } else {
+
+                return userRepository.findAll()
+                        .stream()
+                        .filter(user -> !user.isActive())
+                        .collect(Collectors.toList());
+            }
+        } catch (IllegalArgumentException e) {
+            throw new InvalidUUIDFormatException("Invalid admin ID format", e);
         } catch (Exception e) {
             throw new UserListFetchException("An error occurred while fetching user list", e);
-
         }
     }
 
@@ -95,4 +107,6 @@ public class MerchantServiceImp implements MerchantService {
             throw new MerchantDeleteException("An error occurred while deleting the merchant", e);
         }
     }
+
+
 }

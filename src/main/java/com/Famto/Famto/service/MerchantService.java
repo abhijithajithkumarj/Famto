@@ -10,7 +10,7 @@ public interface MerchantService {
     UserDto saveMerchant(UserDto user);
 
 
-    List<User> userList ();
+    List<User> userList (String id);
 
 
     boolean deleteMerchant(String id);
