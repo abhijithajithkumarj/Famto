@@ -11,6 +11,7 @@ import com.Famto.Famto.service.AdminService;
 import com.Famto.Famto.service.MerchantService;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -77,6 +78,17 @@ public class AdminController {
     @GetMapping("/getAllUser")
     public ResponseEntity<List<User>> getAllUser(){
         return ResponseEntity.ok().body(merchantService.userList());
+    }
+
+
+    @DeleteMapping("/deleteMerchant")
+    public ResponseEntity<String> deleteMerchant(@RequestParam String id) {
+        boolean isDeleted = merchantService.deleteMerchant(id);
+        if (isDeleted) {
+            return ResponseEntity.ok("Merchant deleted successfully");
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Merchant not found");
+        }
     }
 
 

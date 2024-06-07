@@ -2,6 +2,7 @@ package com.Famto.Famto.serviceImp;
 
 import com.Famto.Famto.entity.Admin;
 import com.Famto.Famto.entity.Role;
+import com.Famto.Famto.exception.AdminSaveException;
 import com.Famto.Famto.repo.AdminRepository;
 import com.Famto.Famto.service.AdminService;
 import org.modelmapper.ModelMapper;
@@ -27,10 +28,14 @@ public class AdminServiceRepository implements AdminService {
 
     @Override
     public Admin saveAdmin(Admin admin) {
-        Admin adminData=modelMapper.map(admin,Admin.class);
-        adminData.setRole(Role.ADMIN);
-        adminData.setPassword(passwordEncoder.encode(adminData.getPassword()));
-        return adminRepository.save(adminData);
+        try {
+            Admin adminData = modelMapper.map(admin, Admin.class);
+            adminData.setRole(Role.ADMIN);
+            adminData.setPassword(passwordEncoder.encode(adminData.getPassword()));
+            return adminRepository.save(adminData);
+        } catch (Exception e) {
+            throw new AdminSaveException("An error occurred while saving the admin", e);
+        }
     }
 
 }

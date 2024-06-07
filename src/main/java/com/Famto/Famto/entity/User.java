@@ -17,7 +17,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @Entity
 @Builder
-public class User implements UserDetails {
+public class User  extends BaseEntity implements UserDetails {
 
 
 
@@ -34,11 +34,7 @@ public class User implements UserDetails {
     private String shopName;
     private String phoneNumber;
     private String ownerName;
-
-
-
-
-
+    private String categoryName;
 
 
 
