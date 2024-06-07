@@ -12,4 +12,7 @@ public interface MerchantService {
 
     List<User> userList ();
 
+
+    boolean deleteMerchant(String id);
+
 }

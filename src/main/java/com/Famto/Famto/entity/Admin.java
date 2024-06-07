@@ -20,11 +20,9 @@ import java.util.UUID;
 @AllArgsConstructor
 @Builder
 @Entity
-public class Admin implements UserDetails {
+public class Admin  extends BaseEntity implements UserDetails  {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+
     private String username;
     private String password;
 
