@@ -75,9 +75,9 @@ public class AdminController {
     }
 
 
-    @GetMapping("/getAllUser")
-    public ResponseEntity<List<User>> getAllUser(){
-        return ResponseEntity.ok().body(merchantService.userList());
+    @GetMapping("/getAllMerchant")
+    public ResponseEntity<List<User>> getAllUser(@RequestParam String id){
+        return ResponseEntity.ok().body(merchantService.userList(id));
     }
 
 
